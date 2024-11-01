@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--poppins);
 }
 
 :root {
@@ -17,6 +18,12 @@
   width: 100%;
   height: 100vh;
   background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 20px;
 }
 /* preloader */
 .preloader {
@@ -108,16 +115,6 @@
   transform: rotate(30deg);
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: rgb(var(--color-black));
-  margin: 0;
-  overflow: hidden;
-}
-
 /* Formato esfera + sombra */
 .circle {
   position: absolute;
@@ -136,7 +133,7 @@ body {
 /* Primeira esfera rotacionando com luz laranja */
 .chat-ui{
   width: 100%;
-  height: 3\200px;
+  height: 200px;
 }
 .circle-1 {
   background: radial-gradient(
@@ -200,4 +197,17 @@ body {
   );
   animation: spin 10s infinite;
   transform-origin: center;
+}
+
+/* voice */
+.voice-record{
+  border: 1px solid #F4CFB8;
+  background-color: rgba(255, 255, 255, 0.13);
+  padding: 20px 20px;
+  color: #F4CFB8;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 80px;
 }

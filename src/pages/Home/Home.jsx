@@ -21,6 +21,16 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className="voice-txt">
+        <p className="voice-txt-p">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim voluptatibus laudantium sequi amet, dolorum consectetur eum modi facere explicabo quas?
+        </p>
+      </div>
+      <div className="voice-record">
+        <div className="record">
+          Start Record
+        </div>
+      </div>
     </div>
   );
 };
