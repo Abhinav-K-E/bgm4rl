@@ -5,7 +5,7 @@ const Home = () => {
     const [preloader,setPreLoader]=useState(true);
     setTimeout(()=>{
         setPreLoader(false)
-    },2000)
+    },3000)
     console.log(preloader)
   return (
     <div>

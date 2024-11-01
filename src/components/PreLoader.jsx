@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
 
 const PreLoader = () => {
   return (
-    <div>PreLoader</div>
-  )
-}
+    <div className="preloader">
+      <div id="bars">
+        <div className="bar" />
+        <div className="bar" />
+        <div className="bar" />
+        <div className="bar" />
+        <div className="bar" />
+      </div>
+      Bgm4RealLife
+    </div>
+  );
+};
 
-export default PreLoader
+export default PreLoader;
