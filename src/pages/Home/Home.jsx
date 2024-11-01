@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import PreLoader from "../../components/PreLoader";
 import Nav from "../../components/Nav/Nav";
+import MalayalamSpeechToText from "../../components/VoiceTast";
+
+import HERO from "../../assets/Retro.png";
+import SPEAKER from "../../assets/speaker.png"
+import BTN from "../../assets/btn.png"
 
 const Home = () => {
   const [preloader, setPreLoader] = useState(true);
@@ -12,7 +17,7 @@ const Home = () => {
     <div className="home">
       {preloader && <PreLoader />}
       <Nav />
-      <div className="chat-ui">
+      {/* <div className="chat-ui">
         <div>
           <div className="scale-0">
             <div className="circle circle-1" />
@@ -23,14 +28,23 @@ const Home = () => {
       </div>
       <div className="voice-txt">
         <p className="voice-txt-p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim voluptatibus laudantium sequi amet, dolorum consectetur eum modi facere explicabo quas?
+          <MalayalamSpeechToText/>
         </p>
       </div>
       <div className="voice-record">
         <div className="record">
           Start Record
         </div>
+      </div> */}
+      <img className="hero-txt" src={HERO} alt="" />
+      <div className="voice-txt">
+        <p className="voice-txt-p">
+          {/* <MalayalamSpeechToText /> */}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, sapiente velit distinctio consequatur magni libero reprehenderit nihil possimus tenetur dignissimos?
+        </p>
       </div>
+      <img src={SPEAKER} className="speaker" alt="" />
+      <img src={BTN} alt="" className="btn" />
     </div>
   );
 };
