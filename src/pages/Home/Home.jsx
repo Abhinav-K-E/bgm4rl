@@ -4,18 +4,19 @@ import Nav from "../../components/Nav/Nav";
 import MalayalamSpeechToText from "../../components/VoiceTast";
 
 import HERO from "../../assets/Retro.png";
-import SPEAKER from "../../assets/speaker.png"
-import BTN from "../../assets/btn.png"
+import SPEAKER from "../../assets/speaker.png";
+import BTN from "../../assets/btn.png";
+import { motion } from "framer-motion";
 
 const Home = () => {
-  const [preloader, setPreLoader] = useState(true);
-  setTimeout(() => {
-    setPreLoader(false);
-  }, 3000);
-  console.log(preloader);
+  // const [preloader, setPreLoader] = useState(true);
+  // setTimeout(() => {
+  //   setPreLoader(false);
+  // }, 3000);
+  // console.log(preloader);
   return (
     <div className="home">
-      {preloader && <PreLoader />}
+      {/* {preloader && <PreLoader />} */}
       <Nav />
       {/* <div className="chat-ui">
         <div>
@@ -36,15 +37,30 @@ const Home = () => {
           Start Record
         </div>
       </div> */}
-      <img className="hero-txt" src={HERO} alt="" />
+      <motion.img
+        initial={{ scale: 0, rotate: "20deg" }}
+        animate={{ scale: 1, rotate: "0deg" }}
+        transition={{ duration: 0.8, type: "spring" }}
+        className="hero-txt"
+        src={HERO}
+        alt=""
+      />
       <div className="voice-txt">
         <p className="voice-txt-p">
-          {/* <MalayalamSpeechToText /> */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, sapiente velit distinctio consequatur magni libero reprehenderit nihil possimus tenetur dignissimos?
+          <MalayalamSpeechToText />
+          {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium,
+          sapiente velit distinctio consequatur magni libero reprehenderit nihil
+          possimus tenetur dignissimos? */}
         </p>
       </div>
-      <img src={SPEAKER} className="speaker" alt="" />
-      <img src={BTN} alt="" className="btn" />
+      <motion.img
+        initial={{ scale: 0, rotate: "20deg" }}
+        animate={{ scale: 1, rotate: "0deg" }}
+        transition={{ duration: 0.8, type: "spring",delay:.4 }}
+        src={SPEAKER}
+        className="speaker"
+        alt=""
+      />
     </div>
   );
 };

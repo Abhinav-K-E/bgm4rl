@@ -224,7 +224,7 @@
 
 .voice-txt-p {
   font-size: 24px;
-  background: -webkit-linear-gradient(#eee, #33333348);
+  background: -webkit-linear-gradient(#eee, #ababab78);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
@@ -233,7 +233,7 @@
 /* changes */
 .hero-txt{
   width: 460px;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .speaker{
@@ -244,6 +244,7 @@
 
 .btn{
   cursor: pointer;
+  margin-top: 40px;
 }
 
 @media (max-width:600px) {

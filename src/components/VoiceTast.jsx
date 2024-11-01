@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import BTN from "../assets/btn.png";
+import { motion } from "framer-motion";
 
 const MalayalamSpeechToText = () => {
   const [recognition, setRecognition] = useState(null);
   const [isListening, setIsListening] = useState(false);
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
-  const [autoRestart, setAutoRestart] = useState(true);
 
   useEffect(() => {
     // Check if browser supports speech recognition
@@ -14,8 +15,6 @@ const MalayalamSpeechToText = () => {
       recognitionInstance.lang = "ml-IN";
       recognitionInstance.interimResults = false;
       recognitionInstance.maxAlternatives = 1;
-      // Set a longer silence threshold (in milliseconds)
-      recognitionInstance.continuous = false;
 
       // Configure recognition event handlers
       recognitionInstance.onstart = () => {
@@ -28,63 +27,52 @@ const MalayalamSpeechToText = () => {
         console.log("Speech has stopped.");
         recognitionInstance.stop();
         setIsListening(false);
-
-        // Restart recognition after a brief pause if autoRestart is enabled
-        if (autoRestart) {
-          setTimeout(() => {
-            try {
-              recognitionInstance.start();
-            } catch (error) {
-              console.error("Error restarting recognition:", error);
-            }
-          }, 1000);
-        }
       };
 
       recognitionInstance.onerror = (event) => {
         console.error("Error occurred in recognition:", event.error);
+        setError(`Error: ${event.error}`);
         setIsListening(false);
-
-        // Only set error for non-"no-speech" errors
-        if (event.error !== "no-speech") {
-          setError(`Error: ${event.error}`);
-        }
-
-        // Restart recognition after error if autoRestart is enabled
-        if (autoRestart && event.error !== "not-allowed") {
-          setTimeout(() => {
-            try {
-              recognitionInstance.start();
-            } catch (error) {
-              console.error("Error restarting recognition:", error);
-            }
-          }, 1000);
-        }
       };
 
       recognitionInstance.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         console.log("Result received:", transcript);
-        setResult((prev) => `${prev}\n${transcript}`);
+        setResult(`${transcript}`);
+
+        //call for api
+        const fetchVoice = async () => {
+          try {
+            const response = await fetch("YOUR_API_ENDPOINT", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Add any additional headers your API requires
+                // 'Authorization': 'Bearer YOUR_TOKEN'
+              },
+              body: JSON.stringify({}),
+            });
+
+            const data = await response.json();
+            console.log("API Response:", data);
+
+            // Handle the API response as needed
+            // For example, you might want to update the UI with some confirmation
+            // setResult(prev => `${prev}\nAPI Response: Success`);
+          } catch (err) {
+            console.error("API Error:", err);
+            setError(`API Error: ${err.message}`);
+          }
+        };
       };
 
       setRecognition(recognitionInstance);
-
-      // Start recognition automatically when component mounts
-      recognitionInstance.start();
-
-      // Cleanup function
-      return () => {
-        recognitionInstance.stop();
-        setAutoRestart(false);
-      };
     }
   }, []);
 
-  const toggleListening = () => {
-    setAutoRestart((prev) => !prev);
-    if (!autoRestart) {
-      recognition?.start();
+  const startListening = () => {
+    if (recognition) {
+      recognition.start();
     }
   };
 
@@ -106,30 +94,21 @@ const MalayalamSpeechToText = () => {
   }
 
   return (
-    <div
-    >
-{/* 
-      {error && (
-        <div
-          style={{
-            padding: "16px",
-            backgroundColor: "#fee2e2",
-            border: "1px solid #ef4444",
-            borderRadius: "4px",
-            marginBottom: "16px",
-          }}
-        >
-          {error}
-        </div>
-      )} */}
-
-      <div
-        style={{
-          whiteSpace: "pre-wrap",
-        }}
-      >
-        {result || "Waiting for speech..."}
-      </div>
+    <div>
+      <p>{result || "Click the button and start speaking in Malayalam"}</p>
+      <motion.img
+        initial={{ scale: 0, rotate: "20deg" }}
+        animate={{ scale: 1, rotate: "0deg" }}
+        transition={{ duration: 0.8, type: "spring", delay: 0.8 }}
+        src={BTN}
+        alt=""
+        className="btn"
+        onClick={startListening}
+        disabled={isListening}
+      />
+      {/* <audio controls>
+        <source src="https://soundcloud.com/bgm/woman-boatman-song?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" />
+      </audio> */}
     </div>
   );
 };
