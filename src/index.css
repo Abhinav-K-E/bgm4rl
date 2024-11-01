@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 /* preloader */
 .preloader {
@@ -131,9 +131,11 @@
 }
 
 /* Primeira esfera rotacionando com luz laranja */
-.chat-ui{
+.chat-ui {
   width: 100%;
   height: 200px;
+  position: absolute;
+  top: 20%;
 }
 .circle-1 {
   background: radial-gradient(
@@ -200,14 +202,30 @@
 }
 
 /* voice */
-.voice-record{
-  border: 1px solid #F4CFB8;
+.voice-record {
+  border: 1px solid #f4cfb8;
   background-color: rgba(255, 255, 255, 0.13);
   padding: 20px 20px;
-  color: #F4CFB8;
+  color: #f4cfb8;
   width: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 80px;
+  cursor: pointer;
+}
+
+/* voice-txt */
+.voice-txt {
+  max-width: 500px;
+  margin-top: 200px;
+  padding: 0px 20px;
+}
+
+.voice-txt-p {
+  font-size: 20px;
+  background: -webkit-linear-gradient(#eee, #33333348);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
 }
