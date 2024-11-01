@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PreLoader from '../../components/PreLoader'
+import Nav from '../../components/Nav/Nav';
 
 const Home = () => {
     const [preloader,setPreLoader]=useState(true);
@@ -8,11 +9,11 @@ const Home = () => {
     },3000)
     console.log(preloader)
   return (
-    <div>
+    <div className='home'>
         {
             preloader && <PreLoader/>
         }
-        hey
+        <Nav/>
     </div>
   )
 }
