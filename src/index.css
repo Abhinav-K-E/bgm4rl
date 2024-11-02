@@ -247,6 +247,10 @@
   margin-top: 40px;
 }
 
+audio{
+  opacity: 0;
+}
+
 @media (max-width:600px) {
   .hero-txt{
     width: 360px;

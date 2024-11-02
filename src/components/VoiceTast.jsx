@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BTN from "../assets/btn.png";
 import { motion } from "framer-motion";
 
@@ -7,6 +7,31 @@ const MalayalamSpeechToText = () => {
   const [isListening, setIsListening] = useState(false);
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
+  const [voice, setVoice] = useState("");
+  const audioRef = useRef(null); // Reference for the audio element
+
+  // Call for API
+  const fetchVoice = async (text) => {
+    if (!text || text === "Listening...") return; // Prevent API call if text is empty or still listening
+
+    console.log("Calling API with text:", text);
+    try {
+      const response = await fetch("https://useless.zdisk.xyz/get_emotion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ spoken_text: text, lang: "mal" }),
+      });
+
+      const data = await response.json();
+      console.log("API Response:", data);
+      setVoice(data.bgm);
+    } catch (err) {
+      console.error("API Error:", err);
+      setError(`API Error: ${err.message}`);
+    }
+  };
 
   useEffect(() => {
     // Check if browser supports speech recognition
@@ -38,37 +63,26 @@ const MalayalamSpeechToText = () => {
       recognitionInstance.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         console.log("Result received:", transcript);
-        setResult(`${transcript}`);
-
-        //call for api
-        const fetchVoice = async () => {
-          try {
-            const response = await fetch("YOUR_API_ENDPOINT", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                // Add any additional headers your API requires
-                // 'Authorization': 'Bearer YOUR_TOKEN'
-              },
-              body: JSON.stringify({}),
-            });
-
-            const data = await response.json();
-            console.log("API Response:", data);
-
-            // Handle the API response as needed
-            // For example, you might want to update the UI with some confirmation
-            // setResult(prev => `${prev}\nAPI Response: Success`);
-          } catch (err) {
-            console.error("API Error:", err);
-            setError(`API Error: ${err.message}`);
-          }
-        };
+        setResult(transcript);
+        // Call API with the transcript directly instead of using state
+        if (transcript) {
+          fetchVoice(transcript);
+        }
       };
 
       setRecognition(recognitionInstance);
     }
   }, []);
+
+  useEffect(() => {
+    // Auto-play audio when a new `voice` URL is set
+    if (voice && audioRef.current) {
+      audioRef.current.load(); // Reload the audio element with the new source
+      audioRef.current.play().catch((error) => {
+        console.log("Autoplay prevented:", error);
+      });
+    }
+  }, [voice]);
 
   const startListening = () => {
     if (recognition) {
@@ -76,22 +90,17 @@ const MalayalamSpeechToText = () => {
     }
   };
 
-  if (!("webkitSpeechRecognition" in window)) {
-    return (
-      <div
-        style={{
-          padding: "16px",
-          backgroundColor: "#fee2e2",
-          border: "1px solid #ef4444",
-          borderRadius: "4px",
-          margin: "16px auto",
-          maxWidth: "500px",
-        }}
-      >
-        Sorry, your browser does not support speech recognition.
-      </div>
-    );
-  }
+//   const stopListening = () => {
+//     if (recognition && isListening) {
+//       recognition.stop();
+//       setIsListening(false);
+//     }
+//   };
+
+  const handleAudioEnd = () => {
+    console.log("Audio ended, restarting listening...");
+    startListening(); // Restart speech recognition after audio ends
+  };
 
   return (
     <div>
@@ -106,9 +115,14 @@ const MalayalamSpeechToText = () => {
         onClick={startListening}
         disabled={isListening}
       />
-      {/* <audio controls>
-        <source src="https://soundcloud.com/bgm/woman-boatman-song?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" />
-      </audio> */}
+      {/* <button onClick={stopListening} disabled={!isListening}>
+        Stop Recording
+      </button> */}
+      {voice && (
+        <audio ref={audioRef} controls onEnded={handleAudioEnd}>
+          <source src={voice} type="audio/mpeg" />
+        </audio>
+      )}
     </div>
   );
 };
