@@ -246,18 +246,20 @@ body{
   position: absolute;
   right: 1%;
   bottom: 20%;
+  z-index: 0;
 }
 
 .btn{
   cursor: pointer;
   margin-top: 40px;
+  z-index: 999;
 }
 
 audio{
   opacity: 0;
 }
 
-@media (max-width:600px) {
+@media (max-width:700px) {
   .hero-txt{
     width: 360px;
     margin-top: 60px;
