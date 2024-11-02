@@ -16,27 +16,8 @@ const Home = () => {
   // console.log(preloader);
   return (
     <div className="home">
-      {/* {preloader && <PreLoader />} */}
       <Nav />
-      {/* <div className="chat-ui">
-        <div>
-          <div className="scale-0">
-            <div className="circle circle-1" />
-            <div className="circle circle-2" />
-            <div className="circle circle-3" />
-          </div>
-        </div>
-      </div>
-      <div className="voice-txt">
-        <p className="voice-txt-p">
-          <MalayalamSpeechToText/>
-        </p>
-      </div>
-      <div className="voice-record">
-        <div className="record">
-          Start Record
-        </div>
-      </div> */}
+
       <motion.img
         initial={{ scale: 0, rotate: "20deg" }}
         animate={{ scale: 1, rotate: "0deg" }}
@@ -48,15 +29,12 @@ const Home = () => {
       <div className="voice-txt">
         <p className="voice-txt-p">
           <MalayalamSpeechToText />
-          {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium,
-          sapiente velit distinctio consequatur magni libero reprehenderit nihil
-          possimus tenetur dignissimos? */}
         </p>
       </div>
       <motion.img
         initial={{ scale: 0, rotate: "20deg" }}
         animate={{ scale: 1, rotate: "0deg" }}
-        transition={{ duration: 0.8, type: "spring",delay:.4 }}
+        transition={{ duration: 0.8, type: "spring", delay: 0.4 }}
         src={SPEAKER}
         className="speaker"
         alt=""
