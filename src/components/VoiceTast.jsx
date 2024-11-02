@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import BTN from "../assets/btn.png";
 import STOP from "../assets/Stoprecording.svg";
 import { motion } from "framer-motion";
+import PreLoader from "./PreLoader";
 
 const MalayalamSpeechToText = () => {
   const [recognition, setRecognition] = useState(null);
@@ -10,12 +11,14 @@ const MalayalamSpeechToText = () => {
   const [error, setError] = useState("");
   const [voice, setVoice] = useState("");
   const audioRef = useRef(null); // Reference for the audio element
+  const [loader, setLoader] = useState(false);
 
   // Call for API
   const fetchVoice = async (text) => {
     if (!text || text === "Listening...") return; // Prevent API call if text is empty or still listening
 
     console.log("Calling API with text:", text);
+    setLoader(true);
     try {
       const response = await fetch("https://useless.zdisk.xyz/get_emotion", {
         method: "POST",
@@ -32,17 +35,16 @@ const MalayalamSpeechToText = () => {
       console.error("API Error:", err);
       setError(`API Error: ${err.message}`);
     }
+    setLoader(false);
   };
 
   useEffect(() => {
-    // Check if browser supports speech recognition
     if ("webkitSpeechRecognition" in window) {
       const recognitionInstance = new window.webkitSpeechRecognition();
       recognitionInstance.lang = "ml-IN";
       recognitionInstance.interimResults = false;
       recognitionInstance.maxAlternatives = 1;
 
-      // Configure recognition event handlers
       recognitionInstance.onstart = () => {
         console.log("Speech recognition started.");
         setIsListening(true);
@@ -91,12 +93,12 @@ const MalayalamSpeechToText = () => {
     }
   };
 
-  //   const stopListening = () => {
-  //     if (recognition && isListening) {
-  //       recognition.stop();
-  //       setIsListening(false);
-  //     }
-  //   };
+  const stopListening = () => {
+    if (recognition && isListening) {
+      recognition.stop();
+      setIsListening(false);
+    }
+  };
 
   const handleAudioEnd = () => {
     console.log("Audio ended, restarting listening...");
@@ -105,6 +107,7 @@ const MalayalamSpeechToText = () => {
 
   return (
     <div>
+      {loader && <PreLoader />}
       <p>{result || "Click the button and start speaking in Malayalam"}</p>
       {isListening ? (
         <motion.img
@@ -114,7 +117,7 @@ const MalayalamSpeechToText = () => {
           src={STOP}
           alt=""
           className="btn"
-          onClick={startListening}
+          onClick={stopListening}
         />
       ) : (
         <motion.img
