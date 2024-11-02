@@ -16,13 +16,16 @@ const MalayalamSpeechToText = () => {
 
     console.log("Calling API with text:", text);
     try {
-      const response = await fetch("https://useless.zdisk.xyz/get_emotion", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ spoken_text: text, lang: "mal" }),
-      });
+      const response = await fetch(
+        "https://bgm4reallife-uselessproject.onrender.com/get_emotion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ spoken_text: text, lang: "mal" }),
+        }
+      );
 
       const data = await response.json();
       console.log("API Response:", data);
@@ -90,12 +93,12 @@ const MalayalamSpeechToText = () => {
     }
   };
 
-//   const stopListening = () => {
-//     if (recognition && isListening) {
-//       recognition.stop();
-//       setIsListening(false);
-//     }
-//   };
+  //   const stopListening = () => {
+  //     if (recognition && isListening) {
+  //       recognition.stop();
+  //       setIsListening(false);
+  //     }
+  //   };
 
   const handleAudioEnd = () => {
     console.log("Audio ended, restarting listening...");
