@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BTN from "../assets/btn.png";
+import STOP from "../assets/Stoprecording.svg";
 import { motion } from "framer-motion";
 
 const MalayalamSpeechToText = () => {
@@ -108,19 +109,29 @@ const MalayalamSpeechToText = () => {
   return (
     <div>
       <p>{result || "Click the button and start speaking in Malayalam"}</p>
-      <motion.img
-        initial={{ scale: 0, rotate: "20deg" }}
-        animate={{ scale: 1, rotate: "0deg" }}
-        transition={{ duration: 0.8, type: "spring", delay: 0.8 }}
-        src={BTN}
-        alt=""
-        className="btn"
-        onClick={startListening}
-        disabled={isListening}
-      />
-      {/* <button onClick={stopListening} disabled={!isListening}>
-        Stop Recording
-      </button> */}
+      {isListening ? (
+        <motion.img
+          initial={{ scale: 0, rotate: "20deg" }}
+          animate={{ scale: 1, rotate: "0deg" }}
+          transition={{ duration: 0.8, type: "spring", delay: 0.8 }}
+          src={STOP}
+          alt=""
+          className="btn"
+          onClick={startListening}
+        />
+      ) : (
+        <motion.img
+          initial={{ scale: 0, rotate: "20deg" }}
+          animate={{ scale: 1, rotate: "0deg" }}
+          transition={{ duration: 0.8, type: "spring", delay: 0.8 }}
+          src={BTN}
+          alt=""
+          className="btn"
+          onClick={startListening}
+          disabled={isListening}
+        />
+      )}
+
       {voice && (
         <audio ref={audioRef} controls onEnded={handleAudioEnd}>
           <source src={voice} type="audio/mpeg" />
