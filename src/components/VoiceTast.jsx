@@ -17,7 +17,7 @@ const MalayalamSpeechToText = () => {
 
     console.log("Calling API with text:", text);
     try {
-      const response = await fetch("https://useless.zdisk.xyz/", {
+      const response = await fetch("https://useless.zdisk.xyz/get_emotion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
