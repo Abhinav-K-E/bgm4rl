@@ -230,7 +230,7 @@ body{
 
 .voice-txt-p {
   font-size: 24px;
-  background: -webkit-linear-gradient(#eee, #ababab78);
+  background: -webkit-linear-gradient(#ffffffec, #ababab66);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
